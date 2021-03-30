@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EventBase.Data;
+using EventBase.Models;
 
 namespace EventBase
 {
@@ -29,6 +30,8 @@ namespace EventBase
 
             services.AddDbContext<EventBaseContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventBaseContext")));
+
+            services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<EventBaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +53,7 @@ namespace EventBase
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
