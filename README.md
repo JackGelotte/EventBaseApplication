@@ -1,0 +1,3 @@
+# EventBaseApplication
+
+Event planner etc.
