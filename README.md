@@ -1,3 +1,3 @@
 # EventBaseApplication
 
-Event planner etc.
+A place to join event and for organizers to add events.
