@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EventBase.Data
 {
-    public class EventBaseContext : IdentityDbContext<User>
+    public class EventBaseContext : IdentityDbContext<MyUser>
     {
         public EventBaseContext (DbContextOptions<EventBaseContext> options)
             : base(options)
         {
         }
 
-        public DbSet<EventBase.Models.Event> Event { get; set; }
+        public DbSet<EventBase.Models.Event> Events { get; set; }
+        public DbSet<MyUser> MyUsers { get; set; }
     }
 }

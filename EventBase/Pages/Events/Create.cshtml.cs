@@ -35,7 +35,7 @@ namespace EventBase.Pages.Events
                 return Page();
             }
 
-            _context.Event.Add(Event);
+            _context.Events.Add(Event);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

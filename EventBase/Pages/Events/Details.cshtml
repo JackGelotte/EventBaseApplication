@@ -49,7 +49,8 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Event.ID">Edit</a> |
+<form method="post">
+    
+    <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join"/>
     <a asp-page="./Index">Back to List</a>
-</div>
+</form>

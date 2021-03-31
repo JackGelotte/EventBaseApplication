@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace EventBase.Models
 {
-    public class User : IdentityUser
+    public class MyUser : IdentityUser
     {
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public ICollection<Event> HostedEvents { get; set; }
         public ICollection<Event> JoinedEvents { get; set; }
     }
 }
+

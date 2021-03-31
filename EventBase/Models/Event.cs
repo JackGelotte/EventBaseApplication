@@ -16,8 +16,8 @@ namespace EventBase.Models
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
         [InverseProperty("HostedEvents")]
-        public User Organizer { get; set; }
+        public MyUser Organizer { get; set; }
         [InverseProperty("JoinedEvents")]
-        public ICollection<User> Attendees { get; set; }
+        public ICollection<MyUser> Attendees { get; set; }
     }
 }

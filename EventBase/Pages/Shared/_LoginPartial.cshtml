@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using EventBase.Models
 
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
+@inject SignInManager<MyUser> SignInManager
+@inject UserManager<MyUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
