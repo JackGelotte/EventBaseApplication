@@ -1,5 +1,7 @@
 using EventBase.Data;
+using EventBase.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,8 +30,9 @@ namespace EventBase
                 try
                 {
                     var context = services.GetRequiredService<EventBaseContext>();
-                    context.Database.EnsureCreated();
-                    DbSeed.Seeder(context);
+                    var userManager = services.GetRequiredService<UserManager<MyUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    DbSeed.Seeder(context, userManager, roleManager);
                 }
                 catch(Exception ex)
                 {

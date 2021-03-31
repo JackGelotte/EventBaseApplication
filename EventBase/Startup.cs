@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EventBase.Data;
 using EventBase.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EventBase
 {
@@ -31,7 +32,7 @@ namespace EventBase
             services.AddDbContext<EventBaseContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventBaseContext")));
 
-            services.AddDefaultIdentity<MyUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<EventBaseContext>();
+            services.AddDefaultIdentity<MyUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<EventBaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
