@@ -5,6 +5,12 @@
     ViewData["Title"] = "Details";
 }
 
+@using Microsoft.AspNetCore.Identity;
+@using EventBase.Models;
+
+@inject SignInManager<MyUser> SignInManager
+@inject UserManager<MyUser> UserManager
+
 <h1>Details</h1>
 
 <div>
@@ -49,8 +55,24 @@
         </dd>
     </dl>
 </div>
-<form method="post">
-    
-    <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join"/>
-    <a asp-page="./Index">Back to List</a>
-</form>
+@if (SignInManager.IsSignedIn(User))
+{
+    if (!Model.MyUser.JoinedEvents.Contains(Model.Event))
+    {
+        <form method="post">
+            <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
+        </form>
+    }
+    else
+    {
+    <form method="post">
+        <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-dark disabled" value="Already Joined" />
+    </form>
+    }
+}
+else
+{
+<input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
+}
+
+<a asp-page="./Index">Back to List</a>
