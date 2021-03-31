@@ -22,16 +22,16 @@ namespace EventBase.Pages.MyEvents
             _userManager = userManager;
         }
 
-        public ICollection<Event> Event { get;set; }
+        public ICollection<Event> Event { get; set; }
         public MyUser MyUser { get; set; }
-        
+
         public async Task OnGetAsync()
         {
-
             var userId = _userManager.GetUserId(User);
 
             var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
             Event = MyUser.JoinedEvents;
+
         }
     }
 }

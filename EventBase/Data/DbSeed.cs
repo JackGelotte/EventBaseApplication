@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EventBase.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace EventBase.Data
 {
@@ -10,6 +12,7 @@ namespace EventBase.Data
     {
         public static void Seeder(EventBaseContext context)
         {
+            
             //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Events.RemoveRange(context.Events);

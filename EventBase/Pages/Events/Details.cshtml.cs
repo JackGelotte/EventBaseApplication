@@ -24,7 +24,7 @@ namespace EventBase.Pages.Events
 
         public Event Event { get; set; }
         public MyUser MyUser { get; set; }
-
+        
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -35,6 +35,7 @@ namespace EventBase.Pages.Events
             Event = await _context.Events.FirstOrDefaultAsync(m => m.ID == id);
 
             var userId = _userManager.GetUserId(User);
+
             MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
 
             if (Event == null)

@@ -55,24 +55,21 @@
         </dd>
     </dl>
 </div>
-@if (SignInManager.IsSignedIn(User))
-{
-    if (!Model.MyUser.JoinedEvents.Contains(Model.Event))
+<form method="post">
+    @if (SignInManager.IsSignedIn(User))
     {
-        <form method="post">
+        if (!Model.MyUser.JoinedEvents.Contains(Model.Event))
+        {
             <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
-        </form>
+        }
+        else
+        {
+            <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-dark disabled" value="Already Joined" />
+        }
     }
     else
     {
-    <form method="post">
-        <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-dark disabled" value="Already Joined" />
-    </form>
+        <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
     }
-}
-else
-{
-<input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
-}
-
+</form>
 <a asp-page="./Index">Back to List</a>
