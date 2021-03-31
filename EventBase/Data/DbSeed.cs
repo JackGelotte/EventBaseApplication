@@ -13,9 +13,10 @@ namespace EventBase.Data
         public static void Seeder(EventBaseContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             {
+                SeedEvent(context);
                 SeedRoles(roleManager);
                 SeedUsers(userManager);
-                SeedEvent(context);
+                
             }
         }
         static void SeedUsers(UserManager<MyUser> userManager)
@@ -27,7 +28,7 @@ namespace EventBase.Data
                 user.Email = "user@user.com";
                 user.FirstName = "User";
                 user.LastName = "User";
-
+                user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "User123!").Result;
 
                 if (result.Succeeded)
@@ -44,7 +45,7 @@ namespace EventBase.Data
                 user.Email = "admin@admin.se";
                 user.FirstName = "Admin";
                 user.LastName = "Admin";
-
+                user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Admin123!").Result;
 
                 if (result.Succeeded)
@@ -75,7 +76,7 @@ namespace EventBase.Data
         }
         static void SeedEvent(EventBaseContext context)
         {
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Events.RemoveRange(context.Events);
             context.SaveChanges();
