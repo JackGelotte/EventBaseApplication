@@ -33,6 +33,12 @@ namespace EventBase
                     options.UseSqlServer(Configuration.GetConnectionString("EventBaseContext")));
 
             services.AddDefaultIdentity<MyUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<EventBaseContext>();
+
+            services.AddAuthorization(options =>
+            {
+            options.AddPolicy("RequireAdminRole",
+                policy => policy.RequireRole("Admin"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

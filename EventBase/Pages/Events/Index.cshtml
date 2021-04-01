@@ -4,12 +4,23 @@
 @{
     ViewData["Title"] = "Index";
 }
+@using Microsoft.AspNetCore.Identity
+@using EventBase.Models
+
+@inject SignInManager<MyUser> SignInManager
+@inject UserManager<MyUser> UserManager
 
 <h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+else
+{
+    <p>lol nop</p>
+}
 <table class="table">
     <thead>
         <tr>

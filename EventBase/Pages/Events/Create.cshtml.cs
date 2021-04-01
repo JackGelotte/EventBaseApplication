@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using EventBase.Data;
 using EventBase.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventBase.Pages.Events
-{
+{   [Authorize(Policy="RequireAdminRole")]
     public class CreateModel : PageModel
     {
         private readonly EventBase.Data.EventBaseContext _context;
@@ -18,7 +19,6 @@ namespace EventBase.Pages.Events
         {
             _context = context;
         }
-
         public IActionResult OnGet()
         {
             return Page();
