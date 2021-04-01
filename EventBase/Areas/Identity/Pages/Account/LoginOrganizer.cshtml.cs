@@ -16,14 +16,14 @@ using Microsoft.Extensions.Logging;
 namespace EventBase.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginAdminModel : PageModel
+    public class LoginOrganizerModel : PageModel
     {
         private readonly UserManager<MyUser> _userManager;
         private readonly SignInManager<MyUser> _signInManager;
-        private readonly ILogger<LoginAdminModel> _logger;
+        private readonly ILogger<LoginOrganizerModel> _logger;
 
-        public LoginAdminModel(SignInManager<MyUser> signInManager, 
-            ILogger<LoginAdminModel> logger,
+        public LoginOrganizerModel(SignInManager<MyUser> signInManager, 
+            ILogger<LoginOrganizerModel> logger,
             UserManager<MyUser> userManager)
         {
             _userManager = userManager;
@@ -65,10 +65,10 @@ namespace EventBase.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync("admin@admin.com", "Admin123!", false, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync("organizer@organizer.com", "Organizer123!", false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("Admin logged in.");
+                    _logger.LogInformation("Organizer logged in.");
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
