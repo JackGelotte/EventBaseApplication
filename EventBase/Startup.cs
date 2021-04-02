@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using EventBase.Data;
 using EventBase.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace EventBase
 {
@@ -39,7 +41,7 @@ namespace EventBase
                 options.AddPolicy("RequireAdminRole",
                     policy => policy.RequireRole("Admin"));
                 options.AddPolicy("RequireOrganizerRole",
-                    policy=>policy.RequireRole("Organizer"));
+                    policy=>policy.RequireRole("Organizer", "Admin"));
             });
         }
 

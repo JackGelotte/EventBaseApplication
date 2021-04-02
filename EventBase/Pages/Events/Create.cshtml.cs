@@ -8,16 +8,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using EventBase.Data;
 using EventBase.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventBase.Pages.Events
-{   [Authorize(Policy="RequireAdminRole")]
+{   [Authorize(Policy="RequireOrganizerRole")]
     public class CreateModel : PageModel
     {
         private readonly EventBase.Data.EventBaseContext _context;
+        private readonly UserManager<MyUser> _userManager;
 
-        public CreateModel(EventBase.Data.EventBaseContext context)
+        public CreateModel(EventBase.Data.EventBaseContext context, UserManager<MyUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public IActionResult OnGet()
         {
@@ -26,6 +30,7 @@ namespace EventBase.Pages.Events
 
         [BindProperty]
         public Event Event { get; set; }
+        public MyUser CurrentUser { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -34,7 +39,11 @@ namespace EventBase.Pages.Events
             {
                 return Page();
             }
+            var userId = _userManager.GetUserId(User);
 
+            CurrentUser = await _context.MyUsers.Where(u => u.Id == userId).FirstOrDefaultAsync();
+
+            Event.Organizer = CurrentUser;
             _context.Events.Add(Event);
             await _context.SaveChangesAsync();
 
