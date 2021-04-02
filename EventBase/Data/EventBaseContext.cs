@@ -17,5 +17,6 @@ namespace EventBase.Data
 
         public DbSet<EventBase.Models.Event> Events { get; set; }
         public DbSet<MyUser> MyUsers { get; set; }
+        public static bool Grabs { get; set; }
     }
 }

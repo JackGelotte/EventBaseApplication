@@ -9,9 +9,11 @@
 </head>
 @using Microsoft.AspNetCore.Identity
 @using EventBase.Models
+@using EventBase.Data 
 
 @inject SignInManager<MyUser> SignInManager
 @inject UserManager<MyUser> UserManager
+@inject EventBaseContext Context 
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">

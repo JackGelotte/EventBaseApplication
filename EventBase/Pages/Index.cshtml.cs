@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EventBase.Data;
+using EventBase.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,15 +14,23 @@ namespace EventBase.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly SignInManager<MyUser> _signInManager;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, SignInManager<MyUser> signInManager)
         {
             _logger = logger;
+            _signInManager = signInManager;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-
+            if (!EventBaseContext.Grabs)
+            {
+                await _signInManager.SignOutAsync();
+                EventBaseContext.Grabs = true;
+                return RedirectToPage("./Index");
+            }
+            return Page();
         }
     }
 }
