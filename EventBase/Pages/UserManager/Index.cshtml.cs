@@ -40,12 +40,14 @@ namespace EventBase.Pages.UserManager
                 if (!_userManager.IsInRoleAsync(MyUser, "Organizer").Result)
                 {
                     await _userManager.AddToRoleAsync(MyUser, "Organizer");
+                    await _userManager.RemoveFromRoleAsync(MyUser, "Member");
                     await _context.SaveChangesAsync();
                     return RedirectToPage("/UserManager/Index");
                 }
                 else
                 {
                     await _userManager.RemoveFromRoleAsync(MyUser, "Organizer");
+                    await _userManager.AddToRoleAsync(MyUser, "Member");
                     await _context.SaveChangesAsync();
                     return RedirectToPage("/UserManager/Index");
                 }

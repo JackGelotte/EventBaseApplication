@@ -62,16 +62,22 @@
                 </td>
                 <td>
                    
-                    @if (!UserManager.IsInRoleAsync(item, "Organizer").Result)
+                    @if (!UserManager.IsInRoleAsync(item, "Organizer").Result && !UserManager.IsInRoleAsync(item, "Admin").Result)
                     {
                         <form method="post">
+                            <input type="hidden" name="id" value="@item.Id"/>
                             <input type="checkbox" onchange="this.form.submit()" value="@item.Id" name="id" />
                         </form>
+                    }
+                    else if(UserManager.IsInRoleAsync(item, "Admin").Result)
+                    {
+                        <div class="btn-dark disabled">Admin</div>
                     }
                     else
                     {
                         <form method="post">
-                            <input type="checkbox" onchange="this.form.submit()" value="@item.Id" name="id" checked />
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="checkbox" onchange="this.form.submit()" value="@item.Id" name="id" checked/>
                         </form>
                     }
                 </td>
