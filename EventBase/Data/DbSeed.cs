@@ -96,6 +96,9 @@ namespace EventBase.Data
             var events = new Event[]
             {
                 new Event{Title="DreamHack", Description="Mega Lan Party", Place="Jönköping", Address="Elmia", Date=DateTime.Parse("2022-06-15"), SpotsAvailable=42},
+                new Event{Title="CodeWars", Description="Fika med Grabs", Place="Göteborg", Address="Majorna osv.", Date=DateTime.Parse("2022-08-23"), SpotsAvailable=0},
+                new Event{Title="Föreläsning", Description="Bootstrap aka. helvetet", Place="Helvetet", Address="Innersta Ringen", Date=DateTime.Parse("2023-09-01"), SpotsAvailable=1},
+                new Event{Title="Afterwork hos Richalito", Description="Öl med lite Warhammer", Place="Varberg", Address="Varberg Fästning", Date=DateTime.Parse("2029-02-28"), SpotsAvailable=25},
             };
 
             context.Events.AddRange(events);
