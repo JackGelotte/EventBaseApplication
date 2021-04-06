@@ -23,7 +23,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
@@ -45,6 +45,22 @@
                             </li>
                         }
                     </ul>
+                    <div class="navbar-nav flex-grow-1">
+
+                        @{ 
+                            var userId = UserManager.GetUserId(User);
+                            var currentUser = Context.MyUsers.Where(u => u.Id == userId).FirstOrDefault();
+
+                        }
+
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            
+                          <div class="nav-item">@currentUser.FirstName&nbsp;</div>
+                          <div class="nav-item">@currentUser.LastName</div>
+                        }
+                    </div>
                     <ul class="navbar-nav flex-grow-1 flex-row-reverse">
                         @if (SignInManager.IsSignedIn(User))
                         {
