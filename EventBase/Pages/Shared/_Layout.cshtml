@@ -9,11 +9,11 @@
 </head>
 @using Microsoft.AspNetCore.Identity
 @using EventBase.Models
-@using EventBase.Data 
+@using EventBase.Data
 
 @inject SignInManager<MyUser> SignInManager
 @inject UserManager<MyUser> UserManager
-@inject EventBaseContext Context 
+@inject EventBaseContext Context
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -33,35 +33,29 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents/Index">My Events</a>
-                            </li>
-                        }
-
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/Index">Manage Users</a>
-                            </li>
+                            @if (!User.IsInRole("Organizer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents/Index">My Events</a>
+                                </li>
+                            }
                         }
                     </ul>
                     <div class="navbar-nav flex-grow-1">
 
-                        @{ 
+                        @{
                             var userId = UserManager.GetUserId(User);
                             var currentUser = Context.MyUsers.Where(u => u.Id == userId).FirstOrDefault();
-
                         }
-
-
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            
-                          <div class="nav-item">@currentUser.FirstName&nbsp;</div>
-                          <div class="nav-item">@currentUser.LastName</div>
+
+                            <div class="nav-item">@currentUser.FirstName&nbsp;</div>
+                            <div class="nav-item">@currentUser.LastName</div>
                         }
                     </div>
                     <ul class="navbar-nav flex-grow-1 flex-row-reverse">
+
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
@@ -69,7 +63,23 @@
                                     <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                                 </form>
                             </li>
+                            @if (User.IsInRole("Organizer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/MyEvents/Index">Organize Events</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Events/Create">Add Event</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/UserManager/Index">Manage Users</a>
+                                </li>
+                            }
                         }
+
                         else
                         {
                             <li class="nav-item">
