@@ -58,6 +58,7 @@ namespace EventBase.Pages.Events
             }
             else
             {
+                Event.SpotsAvailable --;
                 MyUser.JoinedEvents.Add(Event);
                 await _context.SaveChangesAsync();
             }

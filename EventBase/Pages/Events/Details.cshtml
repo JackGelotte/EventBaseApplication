@@ -58,13 +58,17 @@
 <form method="post">
     @if (SignInManager.IsSignedIn(User))
     {
-        if (!Model.MyUser.JoinedEvents.Contains(Model.Event))
+        if (!Model.MyUser.JoinedEvents.Contains(Model.Event) && Model.Event.SpotsAvailable > 0)
         {
             <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-success" value="Join" />
         }
-        else
+        else if (Model.MyUser.JoinedEvents.Contains(Model.Event))
         {
-            <input type="submit" asp-page="./" asp-route-id="@Model.Event.ID" class="btn-dark disabled" value="Already Joined" />
+            <a asp-page="./" asp-route-id="@Model.Event.ID" class="btn btn-dark disabled">Already Joined</a>
+        }
+        else if (Model.Event.SpotsAvailable <= 0)
+        {
+            <a asp-page="./" asp-route-id="@Model.Event.ID" class="btn btn-dark disabled">No Spots Available</a>
         }
     }
     else

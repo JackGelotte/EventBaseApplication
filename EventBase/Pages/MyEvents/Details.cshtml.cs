@@ -54,6 +54,7 @@ namespace EventBase.Pages.MyEvents
             }
             else
             {
+                Event.SpotsAvailable++;
                 MyUser.JoinedEvents.Remove(Event);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
