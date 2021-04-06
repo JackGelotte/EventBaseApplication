@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace EventBase.Models
         public string Place { get; set; }
         public string Address { get; set; }
         public DateTime Date { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Atleast 1 spot available on creation")]
         public int SpotsAvailable { get; set; }
         [InverseProperty("HostedEvents")]
         public MyUser Organizer { get; set; }
