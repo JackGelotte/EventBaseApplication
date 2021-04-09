@@ -13,10 +13,9 @@ namespace EventBase.Data
         public static void Seeder(EventBaseContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             {
-                SeedEvent(context);
-                SeedRoles(roleManager);
+                SeedRoles(context, roleManager);
                 SeedUsers(userManager);
-
+                SeedEvent(context, userManager);
             }
         }
         static void SeedUsers(UserManager<MyUser> userManager)
@@ -71,8 +70,13 @@ namespace EventBase.Data
             
         }
 
-        static void SeedRoles(RoleManager<IdentityRole> roleManager)
+        static void SeedRoles(EventBaseContext context, RoleManager<IdentityRole> roleManager)
         {
+
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+            context.SaveChanges();
+
             string[] roleNames = { "Admin", "Organizer", "Member" };
 
 
@@ -87,18 +91,19 @@ namespace EventBase.Data
             }
 
         }
-        static void SeedEvent(EventBaseContext context)
+        static void SeedEvent(EventBaseContext context, UserManager<MyUser> userManager)
         {
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
             context.Events.RemoveRange(context.Events);
             context.SaveChanges();
+
+            var organizerUser = context.MyUsers.Where(u => u.FirstName == "Organizer").FirstOrDefault();
+
             var events = new Event[]
             {
-                new Event{Title="DreamHack", Description="Mega Lan Party", Place="Jönköping", Address="Elmia", Date=DateTime.Parse("2022-06-15"), SpotsAvailable=42},
-                new Event{Title="CodeWars", Description="Göra sjuka saker", Place="Göteborg", Address="Majorna osv.", Date=DateTime.Parse("2022-08-23"), SpotsAvailable=0},
-                new Event{Title="Föreläsning", Description="Bootstrap aka. helvetet", Place="Helvetet", Address="Innersta Ringen", Date=DateTime.Parse("2023-09-01"), SpotsAvailable=1},
-                new Event{Title="Afterwork hos Richalito", Description="Öl med lite Warhammer", Place="Varberg", Address="Varberg Fästning", Date=DateTime.Parse("2029-02-28"), SpotsAvailable=25},
+                new Event{Title="DreamHack", Description="Mega Lan Party", Place="Jönköping", Address="Elmia", Date=DateTime.Parse("2022-06-15"), SpotsAvailable=42,Organizer=organizerUser},
+                new Event{Title="CodeWars", Description="Göra sjuka saker", Place="Göteborg", Address="Majorna osv.", Date=DateTime.Parse("2022-08-23"), SpotsAvailable=0, Organizer=organizerUser},
+                new Event{Title="Föreläsning", Description="Bootstrap aka. helvetet", Place="Helvetet", Address="Innersta Ringen", Date=DateTime.Parse("2023-09-01"), SpotsAvailable=1, Organizer=organizerUser},
+                new Event{Title="Afterwork hos Richalito", Description="Öl med lite Warhammer", Place="Varberg", Address="Varberg Fästning", Date=DateTime.Parse("2029-02-28"), SpotsAvailable=25, Organizer=organizerUser},
             };
 
             context.Events.AddRange(events);
