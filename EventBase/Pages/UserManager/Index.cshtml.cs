@@ -55,7 +55,6 @@ namespace EventBase.Pages.UserManager
             return Page();
         }
 
-
     }
 }
 

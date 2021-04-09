@@ -14,6 +14,8 @@ using EventBase.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using EventBase.Security;
 
 namespace EventBase
 {
@@ -35,13 +37,16 @@ namespace EventBase
                     options.UseSqlServer(Configuration.GetConnectionString("EventBaseContext")));
 
             services.AddDefaultIdentity<MyUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<EventBaseContext>();
-
+            services.AddScoped<IAuthorizationHandler, MyHandler>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireAdminRole",
                     policy => policy.RequireRole("Admin"));
                 options.AddPolicy("RequireOrganizerRole",
                     policy=>policy.RequireRole("Organizer", "Admin"));
+                options.AddPolicy("RequireOrganizerMatchWithEvent",
+                    policy => policy.Requirements.Add(new MyRequirements()));
+
             });
         }
 

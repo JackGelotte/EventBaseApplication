@@ -72,7 +72,7 @@ namespace EventBase.Data
 
         static void SeedRoles(EventBaseContext context, RoleManager<IdentityRole> roleManager)
         {
-
+ 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.SaveChanges();

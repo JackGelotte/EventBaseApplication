@@ -1,6 +1,11 @@
 ﻿@page
 @model EventBase.Pages.MyEvents.DetailsModel
 
+@using Microsoft.AspNetCore.Identity
+@using EventBase.Models
+
+
+@inject UserManager<MyUser> UserManager
 @{
     ViewData["Title"] = "Details";
 }
@@ -39,7 +44,7 @@
             @Html.DisplayNameFor(model => model.Event.Date)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Date)
+            @Model.Event.Date.ToShortDateString()
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Event.SpotsAvailable)
@@ -50,8 +55,16 @@
     </dl>
 </div>
 <div>
-    <form method="post">
-        <input type="submit" value="Leave Event" class="btn-danger" asp-page="./Edit" asp-route-id="@Model.Event.ID" />
-    </form>
+    @if (User.IsInRole("Organizer"))
+    {
+        <a asp-page="./Edit" class="btn btn-warning" asp-route-id="@Model.Event.ID">Edit Event</a>
+    }
+    else
+    {
+        <form method="post">
+            <input type="submit" value="Leave Event" class="btn btn-danger" asp-route-id="@Model.Event.ID" />
+        </form>
+    }
+
     <a asp-page="./Index">Back to List</a>
 </div>
