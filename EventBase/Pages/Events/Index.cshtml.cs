@@ -23,7 +23,7 @@ namespace EventBase.Pages.Events
 
         public async Task OnGetAsync()
         {
-            Event = await _context.Events.ToListAsync();
+            Event = await _context.Events.Include(e => e.Organizer).ToListAsync();
         }
     }
 }

@@ -24,7 +24,7 @@
                 @Html.DisplayNameFor(model => model.Event[0].Place)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Address)
+                Organizer
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Event[0].Date)
@@ -49,7 +49,7 @@
                     @Html.DisplayFor(modelItem => item.Place)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                    @Html.DisplayFor(modelItem => item.Organizer.FirstName)
                 </td>
                 <td>
                     @item.Date.ToShortDateString()
