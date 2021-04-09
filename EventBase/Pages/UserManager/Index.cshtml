@@ -9,28 +9,19 @@
 
 @inject SignInManager<MyUser> SignInManager
 @inject UserManager<MyUser> UserManager
-<h1>Index</h1>
+<h1>Users</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Title)
+                Name/Organizer
             </th>
             <th>
-                Description)
+                Email
             </th>
             <th>
-                Place)
-            </th>
-            <th>
-                Address)
-            </th>
-            <th>
-                Date)
+                PhoneNumber
             </th>
             <th>
                 Is Organiser?
@@ -49,16 +40,10 @@
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
 
