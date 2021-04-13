@@ -45,7 +45,7 @@ namespace EventBase
                 options.AddPolicy("RequireOrganizerRole",
                     policy=>policy.RequireRole("Organizer", "Admin"));
                 options.AddPolicy("RequireOrganizerMatchWithEvent",
-                    policy => policy.Requirements.Add(new MyRequirements()));
+                    policy => policy.Requirements.Add(new OrganizerAndEventMatchRequirement()));
 
             });
         }

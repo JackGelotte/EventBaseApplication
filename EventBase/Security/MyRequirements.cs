@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EventBase.Security
 {
-    public class MyRequirements : IAuthorizationRequirement
+    public class OrganizerAndEventMatchRequirement : IAuthorizationRequirement
     {
     }
 }

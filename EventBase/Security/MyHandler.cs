@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EventBase.Security
 {
-    public class MyHandler : AuthorizationHandler<MyRequirements>
+    public class MyHandler : AuthorizationHandler<OrganizerAndEventMatchRequirement>
     {
         private EventBaseContext _context;
         private UserManager<MyUser> _userManager;
@@ -28,7 +28,7 @@ namespace EventBase.Security
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
         }
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, MyRequirements requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OrganizerAndEventMatchRequirement requirement)
         {
             HttpContext httpContext = _httpContextAccessor.HttpContext;
 
