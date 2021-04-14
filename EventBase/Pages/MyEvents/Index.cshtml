@@ -67,25 +67,31 @@
                 </td>
                 @if (User.IsInRole("Organizer"))
                 {
-                    <td>
-                        <button class="btn btn-dark" data-toggle="collapse" data-target="#clps_@item.ID">View Attendees</button>
+            <td>
+                <button class="btn btn-dark" data-toggle="collapse" data-target="#clps_@item.ID">View Attendees</button>
 
-                        <div id="clps_@item.ID" class="collapse">
+                <div id="clps_@item.ID" class="collapse">
 
-                            @if (item.Attendees.Count != 0)
-                            {<p>
-                                    @foreach (var att in item.Attendees)
-                                    {
-                                    @att.UserName
-                                    }
-                                </p>}
-                            else
+                    @if (item.Attendees.Count != 0)
+                    {<p>
+                            @foreach (var att in item.Attendees)
                             {
-                                <p>lol nop</p>
+                                @att.FirstName
                             }
+                            <form method="post">
+                                <input type="hidden" name="id" value="@item.ID" />
+                                <input type="hidden" name="name" value="@item.Attendees.Last()" />
+                                <button type="button" onclick="this.form.submit()" value="@item.ID" name="id">Kick</button>
+                            </form>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>lol nop</p>
+                    }
 
-                        </div>
-                    </td>
+                </div>
+            </td>
                 }
                 else
                 {

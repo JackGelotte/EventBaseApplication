@@ -42,5 +42,29 @@ namespace EventBase.Pages.MyEvents
                 Event = MyUser.JoinedEvents;
             }
         }
+        public async Task<IActionResult> OnPostAsync(int? id, string? name)
+        {
+            var CurrentEvent = await _context.Events.Include(u => u.Attendees).Where(e => e.ID == id).FirstOrDefaultAsync();
+            var user = _context.MyUsers.Where(u => u.UserName == name).FirstOrDefault();
+
+                CurrentEvent.Attendees.Remove(user);
+            _context.SaveChanges();
+
+            var userId = _userManager.GetUserId(User);
+            var CurrentUser = await _context.MyUsers.Where(u => u.Id == userId).FirstOrDefaultAsync();
+
+            if (_userManager.IsInRoleAsync(CurrentUser, "Organizer").Result)
+            {
+                var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.HostedEvents).ThenInclude(e => e.Attendees).FirstOrDefaultAsync();
+                Event = MyUser.HostedEvents;
+
+            }
+            else
+            {
+                var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
+                Event = MyUser.JoinedEvents;
+            }
+            return RedirectToPage("./Index");
+        }
     }
 }
