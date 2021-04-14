@@ -34,7 +34,7 @@ namespace EventBase.Pages.MyEvents
             {
                 var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.HostedEvents).ThenInclude(e=>e.Attendees).FirstOrDefaultAsync();
                 Event = MyUser.HostedEvents;
-                
+
             }
             else
             {
