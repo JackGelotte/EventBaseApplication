@@ -23,8 +23,8 @@ namespace EventBase.Pages.MyEvents
         }
 
         public ICollection<Event> Event { get; set; }
+        public IList<MyUser> Attendees { get; set; }
         public MyUser MyUser { get; set; }
-
         public async Task OnGetAsync()
         {
             var userId = _userManager.GetUserId(User);
@@ -32,17 +32,15 @@ namespace EventBase.Pages.MyEvents
 
             if (_userManager.IsInRoleAsync(CurrentUser, "Organizer").Result)
             {
-                var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.HostedEvents).FirstOrDefaultAsync();
+                var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.HostedEvents).ThenInclude(e=>e.Attendees).FirstOrDefaultAsync();
                 Event = MyUser.HostedEvents;
+                
             }
             else
             {
                 var MyUser = await _context.MyUsers.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
                 Event = MyUser.JoinedEvents;
             }
-
-
-
         }
     }
 }
