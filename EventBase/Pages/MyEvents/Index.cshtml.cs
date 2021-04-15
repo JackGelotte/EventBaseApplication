@@ -48,6 +48,7 @@ namespace EventBase.Pages.MyEvents
             var user = _context.MyUsers.Where(u => u.UserName == name).FirstOrDefault();
 
                 CurrentEvent.Attendees.Remove(user);
+            CurrentEvent.SpotsAvailable++;
             _context.SaveChanges();
 
             var userId = _userManager.GetUserId(User);
