@@ -42,12 +42,12 @@ namespace EventBase.Pages.MyEvents
                 Event = MyUser.JoinedEvents;
             }
         }
-        public async Task<IActionResult> OnPostAsync(int? id, string? name)
+        public async Task<IActionResult> OnPostAsync(int? id, string name)
         {
             var CurrentEvent = await _context.Events.Include(u => u.Attendees).Where(e => e.ID == id).FirstOrDefaultAsync();
             var user = _context.MyUsers.Where(u => u.UserName == name).FirstOrDefault();
 
-                CurrentEvent.Attendees.Remove(user);
+            CurrentEvent.Attendees.Remove(user);
             CurrentEvent.SpotsAvailable++;
             _context.SaveChanges();
 
